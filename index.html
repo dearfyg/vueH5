@@ -11,7 +11,8 @@
 	</head>
 	<body class="body">
 		<div class="header-sy">
-			<h4><i class="iconfont">&#xe6c8;</i><input type="text" name="" id="" value="" placeholder="搜素商品" /></h4>
+
+            <a href="login.html" id="url">请登录</a><h4><i class="iconfont">&#xe6c8;</i><input type="text" name="" id="" value="" placeholder="搜素商品" /></h4>
 		</div>
 		<div class="index-content">
 			<div class="banner-border">
@@ -76,17 +77,17 @@
 		</div>
 		<div class="header-sy-nr3" id="goods">
 			<ul>
-				<a href="产品详情.html">
-					<li>
+					<li v-for="goods in list" >
 						<div class="spwai">
+							<a :href="['goodsdetail.html?id='+goods.goods_id]">
 							<img src="img/sytu8.png"/>
 							<div class="spxinxi">
-								<p>S-易路达超轻折叠双肩包</p>
-								<span>0金币+￥125</span>
+								<p>{{goods.goods_name}}</p>
+								<span>0金币+￥{{goods.goods_price}}</span>
 							</div>
+							</a>
 						</div>
 					</li>
-				</a>
 			</ul>
 		</div>
 		<div style="height: 5em;"></div>
@@ -126,43 +127,22 @@
 				autoplay : true
 			})
 		</script>
-        <script src="js/jquery-1.12.3.js"></script>
-        <script>
-            //ajax请求
-            $.ajax({
-                //请求接口
-                url : "http://api.1910.com/goods",
-               //请求方式
-                type : "get",
-                //返回的数据格式
-                dataType : "json",
-                //携带cookie
-                //正确的返回
-                success:function(res){
-                    console.log(res.data);
-                    $.each(res.data,function(v,k){
-                        console.log(k);
-                        var node = "<ul>"
-                                    +"<a href='产品详情.html'>"
-                                        + "<li>"
-                                            +"<div class='spwai'>"
-                                            +"<img src='img/sytu8.png'>"
-                                            +"<div>"
-                                                +"<p>"
-                                                    +k.goods_name
-                                                +"</p>"
-                                                +"<span>"
-                                                    +k.goods_price
-                                                +"</span>"
-                                            +"</div>"
-                                            +"</div>"
-                                        + "</li>"
-                                    +"</a>"
-                                +"</ul>"
-                        $("#goods").append(node);
-                    })
+        <script src="js/vue.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script>
+            new Vue({
+                el: '#goods',
+                data () {
+                    return {
+                        list: null
+                    }
+                },
+                mounted () {
+                    axios
+                        .get('http://api_node.1910.com/goods/list')
+                        .then(response => (this.list = response.data.data))
                 }
-            });
-        </script>
+            })
+		</script>
 	</body>
 </html>

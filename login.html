@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/csst9402.css"/>
+	</head>
+	<body>
+		<div class="login">
+			<div class="login-top">
+				<p class="dlu">登录</p>
+				<p class="clwzhzc">若无账号<a href="register.html">立即注册</a></p>
+			</div>
+			<div class="login-nr">
+                <input type="hidden" id="token">
+				<div class="login-nr-inp">
+					<input type="text" name="user" id="user" value="" placeholder="请输入用户名/手机号" />
+				</div>
+				<div class="login-nr-inp">
+					<input type="password" name="user_pwd" id="user_pwd" value="" placeholder="请输入登录密码" />
+				</div>
+				<div class="login-nr-inp">
+					<input type="text" name="" id="" value="" placeholder="请输入验证码" />
+					<p class="yzm">1258</p>
+				</div>
+				<div class="wjmm"><a href="">忘记密码</a></div>
+			</div>
+            <center><h1 id="msg"></h1></center>
+		</div>
+		<div class="login-nr-dl">
+			<input type="button" id="login" value="登录"  />
+		</div>
+		<div style="height: 4em;"></div>
+	</body>
+    <script src="js/jquery-1.12.3.js"></script>
+    <script>
+        $("#login").click(function(){
+            //接值
+            var user = $("#user").val();
+            var user_pwd = $("#user_pwd").val();
+//            ajax请求
+            $.ajax({
+                url :"http://api_node.1910.com/users/login",
+                type: "post",
+                data:{user:user,user_pwd:user_pwd},
+                dataType:"json",
+                success:function(res){
+                    if(res.code=="00000"){
+                        location.href = "index.html?token="+res.data;
+                    }else{
+                        $("#msg").text(res.msg);
+                    }
+                }
+            })
+        })
+    </script>
+</html>

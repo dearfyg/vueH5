@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="css/csst9402.css"/>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.back();"><i class="iconfont">&#xe697;</i></a>
+			<h4>注册</h4>
+		</div>
+		<div class="login">
+			<div class="login-top">
+				<p class="clwzhzc">若已有账号<a href="login.html">立即登录</a></p>
+			</div>
+			<div class="login-nr">
+				<div class="login-nr-inp">
+					<input type="text" name="user_name" id="user_name" value="" placeholder="请输入用户名" />
+				</div>
+				<div class="login-nr-inp">
+					<input type="user_phone" name="user_phone" id="user_phone" value="" placeholder="请输入手机号" />
+				</div>
+				<div class="login-nr-inp">
+					<input type="text" name="" id="" value="" placeholder="请输入验证码" />
+					<p class="yzm">1258</p>
+				</div>
+				<div class="login-nr-inp">
+					<input type="text" name="" id="" value="" placeholder="短信验证码" />
+					<p class="yzm2">获取验证码</p>
+				</div>
+				<div class="login-nr-inp">
+					<input type="password" name="user_pwd" id="user_pwd" value="" placeholder="请输入注册密码" />
+				</div>
+				<div class="login-nr-inp">
+					<input type="text" name="" id="" value="" placeholder="请输入上属店铺" />
+				</div>
+			</div>
+		</div>
+        <center><h1 id="msg"></h1></center>
+		<div class="login-nr-dl">
+			<input type="button" name="" id="reg" value="注册"  />
+		</div>
+		<div style="height: 4em;"></div>
+	</body>
+    <script src="js/jquery-1.12.3.js"></script>
+    <script>
+        $("#reg").click(function(){
+            //获取值
+            var user = $("#user_name").val();
+            var phone = $("#user_phone").val();
+            var user_pwd = $("#user_pwd").val();
+            //ajax
+            $.ajax({
+                url:"http://api_node.1910.com/users/reg",
+                type:"post",
+                data:{user_name:user,phone:phone,user_pwd:user_pwd},
+                dataType:"json",
+                success:function(res){
+                   if(res.code="00000"){
+                       location.href = "index.php?token"+res.data;
+                   }else{
+                        $("#msg").text(res.msg);
+                   }
+                }
+            })
+        })
+    </script>
+</html>
